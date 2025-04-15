@@ -4,6 +4,7 @@ import pytest
 from selenium import webdriver
 from tests.pageObjects.pom.loginpage import LoginPage
 
+
 @pytest.fixture()
 def driver():
     driver = webdriver.Chrome()
