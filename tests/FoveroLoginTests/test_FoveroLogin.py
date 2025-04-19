@@ -4,16 +4,6 @@ import pytest
 from selenium import webdriver
 from tests.pageObjects.pom.loginpage import LoginPage
 
-
-@pytest.fixture()
-def driver():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    driver.get("https://fovero.app/signin")
-    yield driver
-    driver.quit()
-
-
 # @allure.epic("Fovero Login Test")
 # @allure.feature("TC#1 - Fovero Login Negative Test")
 # @pytest.mark.negative
