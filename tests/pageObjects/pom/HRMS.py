@@ -2,7 +2,7 @@ import time
 
 import pytest
 import allure
-from selenium.common import StaleElementReferenceException
+from selenium.common import StaleElementReferenceException, TimeoutException
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -19,6 +19,7 @@ class HRMS:
     Sidebar_menu_HRMS = (By.XPATH,'//*[@id="root"]/div[2]/div[2]/div/div/div[2]/a')
     Leaves = (By.CSS_SELECTOR,"#root > div.sc-cVzyXs.ieCMrL.sidebarOpen > div.rightSide > div > div > div > div.mb-5.custom-padding.col-lg-4.col-md-3.col-sm-12 > div > div:nth-child(2) > div:nth-child(1) > a > button")
     Upcomming_Leaves = (By.XPATH,'//*[@id="leaveList-tabpane-upcoming"]/div/div/div/div')
+    No_upcoming_leaves = (By.XPATH,'//*[@id="leaveList-tabpane-upcoming"]/div/div/div/div/div')
 
 
 
@@ -32,6 +33,20 @@ class HRMS:
 
     def get_upcomming_leaves(self):
         return WebDriverWait(self.driver,timeout=10).until(EC.presence_of_element_located(HRMS.Upcomming_Leaves))
+
+    def is_data_present(self):
+        try:
+            # Wait and check if "No records" message is visible
+            WebDriverWait(self.driver, 5).until(
+                EC.visibility_of_element_located(HRMS.No_upcoming_leaves)
+            )
+            print("❌ No records found")
+            return False
+        except TimeoutException:
+            print("✅ Records are present")
+            return True
+
+
 
     def get_HRMS(self):
         self.get_sidebar_menu_HRMS().click()

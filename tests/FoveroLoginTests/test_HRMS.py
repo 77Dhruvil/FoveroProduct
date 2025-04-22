@@ -13,4 +13,8 @@ def test_HRMS(driver):
     hrms = HRMS(driver)
     hrms.get_HRMS()
     print("Completed")
-
+    if hrms.is_data_present():
+        print("Proceed with checking records")
+        # Add logic to validate or extract data
+    else:
+        print("Handle the no-data state gracefully")
