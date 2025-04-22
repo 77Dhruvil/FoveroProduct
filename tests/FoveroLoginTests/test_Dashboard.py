@@ -30,14 +30,12 @@ def test_Fovero_Dashboard(driver):
 
         # Step 2: Navigate to Dashboard
         dashboard = Dashboard(driver)
-        dashboard.get_Fovero_Dashboard()
-
+        dashboard.get_Fovero_Dashboardd()
 
         # Step 3: Validate Productive Hours
         productive_hours = dashboard.get_user_weekly_recorded_hrs_viewall()
         assert productive_hours is not None, "Productive hours not displayed"
         print(f"✅ Productive hours: {productive_hours}")
-
 
         todays_birthdays = dashboard.check_birthday_section("Today's")
 
@@ -60,27 +58,27 @@ def test_Fovero_Dashboard(driver):
 
 
     #         # Step 4: Check if Leave/WFH users are listed
-#         leave_users = dashboard.get_leave_users()
-#         wfh_users = dashboard.get_wfh_users()
-#
-#         if leave_users or wfh_users:
-#             print("✅ Leave/WFH users are listed")
-#         else:
-#             pytest.fail("❌ No Leave or WFH users found")
-#
-#         # Step 5: Check Announcements exist
-#         announcements = dashboard.get_announcements()
-#         assert len(announcements) > 0, "No announcements found"
-#         print(f"✅ {len(announcements)} announcement(s) present")
-#
-#         # Step 6: Validate Timesheet entries
-#         timesheets = dashboard.get_recent_timesheets()
-#         assert len(timesheets) > 0, "Timesheet entries missing"
-#
-#         for entry in timesheets:
-#             assert 'date' in entry and 'project' in entry and 'hours' in entry, "Timesheet entry is missing details"
-#             print(f"✅ Timesheet: {entry['date']} | {entry['project']} | {entry['hours']}h")
-#
+    #         leave_users = dashboard.get_leave_users()
+    #         wfh_users = dashboard.get_wfh_users()
+    #
+    #         if leave_users or wfh_users:
+    #             print("✅ Leave/WFH users are listed")
+    #         else:
+    #             pytest.fail("❌ No Leave or WFH users found")
+    #
+    #         # Step 5: Check Announcements exist
+    #         announcements = dashboard.get_announcements()
+    #         assert len(announcements) > 0, "No announcements found"
+    #         print(f"✅ {len(announcements)} announcement(s) present")
+    #
+    #         # Step 6: Validate Timesheet entries
+    #         timesheets = dashboard.get_recent_timesheets()
+    #         assert len(timesheets) > 0, "Timesheet entries missing"
+    #
+    #         for entry in timesheets:
+    #             assert 'date' in entry and 'project' in entry and 'hours' in entry, "Timesheet entry is missing details"
+    #             print(f"✅ Timesheet: {entry['date']} | {entry['project']} | {entry['hours']}h")
+    #
     except Exception as e:
         allure.attach(driver.get_screenshot_as_png(), name="Dashboard_Failure",
                       attachment_type=allure.attachment_type.PNG)
@@ -112,15 +110,3 @@ def test_Fovero_Dashboard(driver):
 #
 # def get_recent_timesheets(self):
 # # return a list of dicts like [{'date': '2025-04-11', 'project': 'Fovero - Product', 'hours': '8'}]
-
-
-
-
-
-
-
-
-
-
-
-
