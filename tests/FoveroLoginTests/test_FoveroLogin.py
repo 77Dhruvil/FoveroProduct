@@ -4,20 +4,6 @@ import pytest
 from selenium import webdriver
 from tests.pageObjects.pom.loginpage import LoginPage
 
-# @allure.epic("Fovero Login Test")
-# @allure.feature("TC#1 - Fovero Login Negative Test")
-# @pytest.mark.negative
-
-# def test_FoveroLogin_Negative(setup):
-
-#         loginpage = LoginPage(driver=setup)
-#         loginpage.get_Fovero_Login(eml="dhruvil.patel@concettolabs.com", pwd="Devil@1234")
-#         time.sleep(2)
-       #  webdriver_wait(setup, By.CSS_SELECTOR, "#\31  > div.Toastify__toast-body(), 'Incorrect username or password.')]")
-#
-#         error_msg_element = loginpage.get_error_message()
-#         assert error_msg_element == "Incorrect username or password."
-
 @allure.epic("Fovero Login Test")
 @allure.feature("TC#2 - Fovero Login Positive Test")
 @pytest.mark.positive

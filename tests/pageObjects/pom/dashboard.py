@@ -16,22 +16,20 @@ class Dashboard:
     punch_in_out_back_button = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[1]/div/a')
     sidebar_menu_dashboard = (By.XPATH, '//*[@id="root"]/div[2]/div[2]/div/div/div[1]/a')
     Todays_birthday = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[1]/div/div/button[1]')
-    Todays_birthday_Forward_button = (
-        By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[2]/div/div/button[2]')
-    Todays_birthday_Backward_button = (
-        By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[2]/div/div/button[1]')
+    Todays_birthday_Forward_button = ( By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[2]/div/div/button[2]')
+    Todays_birthday_Backward_button = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[2]/div/div/button[1]')
     Upcoming_birthday = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[1]/div/div/button[2]')
-    Upcoming_birthday_Forward_button = (
-        By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[2]/div/div/button[2]')
-    Upcoming_birthday_Backward_button = (
-        By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[2]/div/div/button[1]')
+    Upcoming_birthday_Forward_button = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[2]/div/div/button[2]')
+    Upcoming_birthday_Backward_button = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[2]/div[1]/div/div[2]/div/div/button[1]')
     Recent_Timesheet = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[1]/div[3]/div/div/div[1]/a')
     Close_Recent_Timesheet = (By.XPATH, '/html/body/div[3]/div/div/div/div[1]/button')
-    view_Recent_Timesheet = (
-        By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[1]/div[3]/div/div/div[2]/div[2]/div/div/div[5]/img')
+    view_Recent_Timesheet = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[1]/div[3]/div/div/div[2]/div[2]/div/div/div[5]/img')
     close_Report_Timesheet = (By.XPATH, '/html/body/div[3]/div/div/div/div[1]/button')
     Apply_Leave_button = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div/div/div[1]/div[4]/div/div/div[1]/div[2]/a')
     Back_Apply_Leave_Button = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[1]/div/a')
+    Go_To_Dashboard = (By.XPATH,'//*[@id="root"]/div[2]/div[2]/div/div/div[1]/a')
+
+
 
     def get_user_weekly_recorded_hrs_viewall(self):
         return WebDriverWait(self.driver, 10).until(
@@ -106,7 +104,14 @@ class Dashboard:
     def get_Back_Apply_Leave_Button(self):
         return WebDriverWait(self.driver, timeout=10).until(
             EC.presence_of_element_located(Dashboard.Back_Apply_Leave_Button)
+
         )
+
+    def get_go_to_Dashboard(self):
+        return WebDriverWait(self.driver, timeout=10).until(EC.presence_of_element_located(Dashboard.Go_To_Dashboard))
+
+
+
 
     def check_birthday_section(self, tab_name="Today's"):
         if tab_name == "Today's":
@@ -186,8 +191,6 @@ class Dashboard:
         self.get_Apply_Leave_Button().click()
         self.get_Back_Apply_Leave_Button().click()
         self.get_sidebar_menu_back_button().click()
+        self.get_go_to_Dashboard().click()
         print("Completed")
 
-    # self.get_Todays_birthday().click()
-    # time.sleep(5)
-    # self.get_Upcoming_birthday().click()
