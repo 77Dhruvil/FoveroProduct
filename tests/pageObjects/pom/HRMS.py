@@ -7,9 +7,6 @@ from selenium.common import StaleElementReferenceException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.common.action_chains import ActionChains
-
 
 class HRMS:
 
@@ -31,6 +28,10 @@ class HRMS:
     Apply_leave_button = (By.XPATH,'/html/body/div/div[2]/div[3]/div[1]/div[2]')
     Leave_type_Dropdown = (By.XPATH,'//*[@id="leave_type"]/div/div[1]/div[2]')
     To_Dropdown = (By.XPATH,'//*[@id="to"]/div[1]')
+    Start_From_date_field = (By.NAME,"start_date")
+
+
+
 
     def get_sidebar_menu_HRMS(self):
         return WebDriverWait(self.driver, timeout=10).until(EC.presence_of_element_located(HRMS.Sidebar_menu_HRMS))
@@ -116,6 +117,42 @@ class HRMS:
          user_option = wait.until(EC.element_to_be_clickable((By.XPATH, f"//div[text()='{user}']")))
          user_option.click()
 
+    def get_start_from_date_field(self):
+        return WebDriverWait(self.driver, timeout=10).until(
+            EC.presence_of_element_located(HRMS.Start_From_date_field))
+
+
+    def get_select_date_picker(self , year, month, day):
+
+        wait = WebDriverWait(self.driver, 10)
+
+        # 1. Click on the "From" date field to open the date picker
+        date_field = wait.until(EC.element_to_be_clickable((By.NAME,"start_date")))
+        date_field.click()
+
+        # 2. Select the year
+        year_dropdown = wait.until(
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[2]/div/div/div/form/div[4]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[2]/select')))
+        year_dropdown.click()
+
+        year_option = wait.until(EC.element_to_be_clickable(
+            (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[2]/div/div/div/form/div[4]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[2]/select/option[126]')))
+        year_option.click()
+
+        # 3. Select the month
+        month_dropdown = wait.until(
+            EC.element_to_be_clickable((By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[2]/div/div/div/form/div[4]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/select')))
+        month_dropdown.click()
+        month_option = wait.until(EC.element_to_be_clickable(
+            (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[2]/div/div/div/form/div[4]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/select/option[4]')))
+        month_option.click()
+        time.sleep(5)
+        day_cell = wait.until(EC.element_to_be_clickable(
+            (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[2]/div/div/div/form/div[4]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div[5]')))
+        day_cell.click()
+        time.sleep(10)
+
+
 
     def get_HRMS(self):
         self.get_sidebar_menu_HRMS().click()
@@ -134,3 +171,5 @@ class HRMS:
         time.sleep(5)
         self.get_To_Dropdown(driver=self.driver, user_list=['Manish Patel', 'Tejas Patel'])
         time.sleep(5)
+        self.get_start_from_date_field().click()
+        self.get_select_date_picker('2025', '4','10')
