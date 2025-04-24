@@ -11,15 +11,4 @@ def test_HRMS(driver):
     test_FoveroLogin_Positive(driver)
     hrms = HRMS(driver)
     hrms.get_HRMS()
-    print("Completed")
-    if hrms.is_upcoming_leaves_present():
-        print("Test Passed ✅ - Upcoming leaves are present.")
-    else:
-        print("Test Failed ❌ - No upcoming leaves found.")
-        driver.save_screenshot("no_upcoming_leaves.png")
 
-    if hrms.is_history_leaves_present():
-        print("Test Passed ✅ - History leaves are present.")
-    else:
-        print("Test Failed ❌ - No History leaves found.")
-        driver.save_screenshot("no_history_leaves.png")
