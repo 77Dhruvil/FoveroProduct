@@ -1,4 +1,5 @@
 import time
+import keyboard
 
 import pytest
 import allure
@@ -29,8 +30,11 @@ class HRMS:
     Leave_type_Dropdown = (By.XPATH,'//*[@id="leave_type"]/div/div[1]/div[2]')
     To_Dropdown = (By.XPATH,'//*[@id="to"]/div[1]')
     Start_From_date_field = (By.NAME,"start_date")
-
-
+    End_To_date_field = (By.NAME,"end_date")
+    Duration_selection = (By.XPATH,'//*[@id="leaveDays.[0].selectedDuration"]/div')
+    Leave_Reason = (By.ID,"leave_reason")
+    Cancel_button = (By.XPATH,'//*[@id="root"]/div[2]/div[3]/div[2]/div[1]/div/div/form/div[6]/div/button[2]')
+    Back_button_Leave_List = (By.XPATH,'//*[@id="root"]/div[2]/div[3]/div[1]/div[1]/a')
 
 
     def get_sidebar_menu_HRMS(self):
@@ -147,12 +151,73 @@ class HRMS:
             (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[2]/div/div/div/form/div[4]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/select/option[4]')))
         month_option.click()
         time.sleep(5)
+
+        # 4. Select the day
         day_cell = wait.until(EC.element_to_be_clickable(
             (By.XPATH, '//*[@id="root"]/div[2]/div[3]/div[2]/div/div/div/form/div[4]/div/div[1]/div/div[1]/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div[5]')))
         day_cell.click()
         time.sleep(10)
 
+    def get_end_to_date_field(self):
+        return WebDriverWait(self.driver, timeout=10).until(
+            EC.presence_of_element_located(HRMS.End_To_date_field))
 
+    def get_end_to_date_picker(self,year,month,day):
+
+        wait = WebDriverWait(self.driver, 10)
+
+        # 1. Click on the "From" date field to open the date picker
+        date_field = wait.until(EC.element_to_be_clickable((By.NAME, "end_date")))
+        date_field.click()
+
+        # 2. Select the year
+        year_dropdown = wait.until(
+            EC.element_to_be_clickable((By.XPATH,
+                                        '//*[@id="root"]/div[2]/div[3]/div[2]/div[1]/div/div/form/div[4]/div/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[2]/select')))
+        year_dropdown.click()
+
+        year_option = wait.until(EC.element_to_be_clickable(
+            (By.XPATH,
+             '//*[@id="root"]/div[2]/div[3]/div[2]/div[1]/div/div/form/div[4]/div/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[2]/select/option[1]')))
+        year_option.click()
+
+        # 3. Select the month
+        month_dropdown = wait.until(
+            EC.element_to_be_clickable((By.XPATH,
+                                        '//*[@id="root"]/div[2]/div[3]/div[2]/div[1]/div/div/form/div[4]/div/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/select')))
+        month_dropdown.click()
+        month_option = wait.until(EC.element_to_be_clickable(
+            (By.XPATH,
+             '//*[@id="root"]/div[2]/div[3]/div[2]/div[1]/div/div/form/div[4]/div/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/select/option[4]')))
+        month_option.click()
+        time.sleep(5)
+
+        # 4. Select the day
+        day_cell = wait.until(EC.element_to_be_clickable(
+            (By.XPATH,
+             '//*[@id="root"]/div[2]/div[3]/div[2]/div[1]/div/div/form/div[4]/div/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[2]/div[2]/div[6]')))
+        day_cell.click()
+
+
+    def get_duration_selection(self):
+        return WebDriverWait(self.driver, timeout=10).until(
+            EC.presence_of_element_located(HRMS.Duration_selection))
+
+    def get_leave_reason(self):
+        return (WebDriverWait(self.driver,timeout=10).until
+                (EC.presence_of_element_located(HRMS.Leave_Reason))
+            )
+
+
+    def get_cancel_button(self):
+        return (WebDriverWait(self.driver, timeout=10).until
+                (EC.presence_of_element_located(HRMS.Cancel_button))
+                )
+
+    def get_Back_button_leave_list(self):
+        return (WebDriverWait(self.driver, timeout=10).until
+                (EC.presence_of_element_located(HRMS.Back_button_Leave_List))
+                )
 
     def get_HRMS(self):
         self.get_sidebar_menu_HRMS().click()
@@ -173,3 +238,11 @@ class HRMS:
         time.sleep(5)
         self.get_start_from_date_field().click()
         self.get_select_date_picker('2025', '4','10')
+        self.get_end_to_date_field().click()
+        self.get_end_to_date_picker('2025','4','11')
+        self.get_duration_selection().click()
+        keyboard.write("First Half")
+        keyboard.press("enter")
+        self.get_leave_reason().send_keys("Need to attend Function")
+        self.get_cancel_button().click()
+        self.get_Back_button_leave_list().click()
