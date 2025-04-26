@@ -31,7 +31,11 @@ class Projects:
     Filter_Button = (By.XPATH,'//*[@id="root"]/div[2]/div[3]/div[2]/div/div[1]/div[2]/img')
     Filter_Search_Button = (By.CSS_SELECTOR,"body > div.filterOffcanvas.offcanvas.offcanvas-end.show > div.offcanvas-body > div.w-auto.mt-3.col-lg-6.col-sm-12 > button.btn.btn-primary")
     Filter_Reset_Button = (By.CSS_SELECTOR,"body > div.filterOffcanvas.offcanvas.offcanvas-end.show > div.offcanvas-body > div.w-auto.mt-3.col-lg-6.col-sm-12 > button.btn.btn-secondary")
-
+    Progressbar_click = (By.XPATH,'//*[@id="cell-5-754"]/div/div')
+    Progressbar_Detail_page_Date_picker = (By.XPATH,'/html/body/div[2]/div[1]/div/div[2]/div/div')
+    Progressbar_Detail_page_Date_picker_start_date = (By.XPATH,'/html/body/div[2]/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div[6]')
+    Progressbar_Detail_page_Date_picker_End_date = (By.XPATH,'/html/body/div[2]/div[1]/div/div[2]/div[2]/div[2]/div/div/div[3]/div[2]/div[5]/div[7]')
+    Progressbar_Detail_page_Close_button = (By.XPATH,'/html/body/div[2]/div[1]/button')
     def get_sidebar_menu_projects(self):
         return WebDriverWait(self.driver,timeout=10).until(EC.presence_of_element_located(Projects.Sidebar_Menu_Projects))
 
@@ -84,45 +88,148 @@ class Projects:
         return WebDriverWait(self.driver, timeout=10).until(
             EC.presence_of_element_located(Projects.Filter_Reset_Button))
 
+    def get_progressbar_click(self):
+        return WebDriverWait(self.driver,timeout=10).until(
+            EC.presence_of_element_located(Projects.Progressbar_click)
+        )
+
+    def get_progressbar_Detail_page_Date_picker(self):
+        return WebDriverWait(self.driver, timeout=10).until(
+            EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker)
+        )
+
+    def get_progressbar_Detail_page_Date_picker_start_date(self):
+        return WebDriverWait(self.driver, timeout=10).until(
+            EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker_start_date)
+        )
+
+    def get_progressbar_Detail_page_Date_picker_end_date(self):
+        return WebDriverWait(self.driver, timeout=10).until(
+            EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker_End_date)
+        )
+
+    def get_progressbar_Detail_page_Close_button(self):
+        return WebDriverWait(self.driver, timeout=10).until(
+            EC.presence_of_element_located(Projects.Progressbar_Detail_page_Close_button)
+        )
+
 
     def get_Projects(self):
-        self.get_sidebar_menu_projects().click()
-        time.sleep(5)
-        self.get_project_name_click().click()
+
+        try:
+            self.get_sidebar_menu_projects().click()
+        except TimeoutException:
+            pytest.fail("Sidebar menu for Projects did not load in time")
+
+
+        try:
+            self.get_project_name_click().click()
+        except TimeoutException:
+            pytest.fail("Project name is not clickable or not loaded at a time")
+
+        try:
+            self.get_project_Estimation_tab().click()
+        except TimeoutException:
+            pytest.fail("Project Estimation tab is not clickable or not loaded at a time")
+
+        try:
+            self.get_Estimation_Department_click().click()
+        except TimeoutException:
+            pytest.fail("Project Estimation Department click is not clickable or not loaded at a time")
+
+        try:
+            self.get_view_estimation_popup_close().click()
+        except TimeoutException:
+            pytest.fail("Project Estimation Pop up click is not clickable or not loaded at a time")
+
+        try:
+            self.get_Document_tab_click()
+        except TimeoutException:
+            pytest.fail("Project Document tab  click is not clickable or not loaded at a time")
+
+        try:
+            self.get_edit_project_back_button().click()
+        except TimeoutException:
+            pytest.fail("Project Edit button  click is not clickable or not loaded at a time")
+
         time.sleep(2)
-        self.get_project_Estimation_tab().click()
-        time.sleep(2)
-        self.get_Estimation_Department_click().click()
-        time.sleep(2)
-        self.get_view_estimation_popup_close().click()
-        time.sleep(2)
-        self.get_Document_tab_click()
-        time.sleep(2)
-        self.get_edit_project_back_button().click()
-        time.sleep(2)
-        self.get_search_bar().send_keys("Fovero")
-        time.sleep(2)
-        self.get_search_bar().clear()
-        time.sleep(5)
-        # self.get_search_bar().click()
-        # time.sleep(5)
-        self.get_Filter_button().click()
-        time.sleep(5)
-        self.get_status_filter_Drpdwn()
-        time.sleep(5)
+
+        try:
+            self.get_search_bar().send_keys("ECO Solution")
+        except TimeoutException:
+            pytest.fail("Search bar  click is not clickable or not working")
+
+        try:
+            self.get_search_bar().clear()
+        except TimeoutException:
+            pytest.fail("Search bar  value is not cleared from the search bar")
+
+        try:
+            self.get_Filter_button().click()
+        except TimeoutException:
+            pytest.fail("Filter button is not clickable or filter menu is not opened")
+
+        try:
+            self.get_status_filter_Drpdwn()
+        except TimeoutException:
+            pytest.fail("Status filter dropdown is not clickable or opended")
+
+
         keyboard.write("Archived")
-        time.sleep(5)
+
         keyboard.press("enter")
-        time.sleep(5)
-        self.get_status_filter_Drpdwn()
-        time.sleep(5)
-        self.get_filter_search_button().click()
-        time.sleep(5)
-        self.get_Filter_button().click()
-        time.sleep(5)
-        self.get_filter_reset_button().click()
+
+        try:
+            self.get_status_filter_Drpdwn()
+        except TimeoutException:
+            pytest.fail("To close the sidebar menu")
+
+        try:
+            self.get_filter_search_button().click()
+        except TimeoutException:
+            pytest.fail("Filter button is not clickable ")
+
+        try:
+            self.get_Filter_button().click()
+        except TimeoutException:
+            pytest.fail("Again filter sidebar menu is not opened ")
+
         time.sleep(5)
 
+        try:
+            self.get_filter_reset_button().click()
+        except TimeoutException:
+            pytest.fail("Filter reset button is not clickable ")
+
+        time.sleep(5)
+
+        try:
+            self.get_progressbar_click().click()
+        except TimeoutException:
+            pytest.fail("progressbar is not clickable ")
+
+        time.sleep(5)
+
+        try:
+            self.get_progressbar_Detail_page_Date_picker().click()
+        except TimeoutException:
+            pytest.fail("Date picker is not clickable ")
+
+        try:
+            self.get_progressbar_Detail_page_Date_picker_start_date().click()
+        except TimeoutException:
+            pytest.fail("Start date is not clickable ")
+
+
+        try:
+            self.get_progressbar_Detail_page_Date_picker_end_date().click()
+        except TimeoutException:
+            pytest.fail("End date is not clickable ")
+
+        try:
+            self.get_progressbar_Detail_page_Close_button().click()
+        except TimeoutException:
+            pytest.fail("Progressbar Detial page is not closed ")
 
 
 
