@@ -1,6 +1,8 @@
 import time
 from lib2to3.pgen2 import driver
 import pyautogui
+import pytest
+from selenium.common import TimeoutException
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -175,22 +177,64 @@ class Dashboard:
 
 
     def get_Fovero_Dashboardd(self):
-        self.get_user_weekly_recorded_hrs_viewall().click()
 
-        self.get_punch_in_out_back_button().click()
+        try:
+            self.get_user_weekly_recorded_hrs_viewall().click()
+        except TimeoutException:
+            pytest.fail("View all button is not clickable")
 
-        self.get_sidebar_menu_back_button().click()
+        try:
+            self.get_punch_in_out_back_button().click()
+        except TimeoutException:
+            pytest.fail("Back button is not clickable")
+
+
+        try:
+            self.get_sidebar_menu_back_button().click()
+        except TimeoutException:
+            pytest.fail("sidebar Back button is not clickable")
 
         pyautogui.scroll(-500)  # Scrolls down
-        self.get_Recent_Timesheet().click()
 
-        print("abc")
-        self.get_close_Recent_Timesheet().click()
-        self.get_View_Recent_Timesheet().click()
-        self.get_Close_Report_Timesheet().click()
-        self.get_Apply_Leave_Button().click()
-        self.get_Back_Apply_Leave_Button().click()
-        self.get_sidebar_menu_back_button().click()
-        self.get_go_to_Dashboard().click()
-        print("Completed")
+        try:
+            self.get_Recent_Timesheet().click()
+        except TimeoutException:
+            pytest.fail("Recent timesheet button is not clickable")
+
+        try:
+            self.get_close_Recent_Timesheet().click()
+        except TimeoutException:
+            pytest.fail("close recent timesheet button is not clickable")
+
+        try:
+            self.get_View_Recent_Timesheet().click()
+        except TimeoutException:
+            pytest.fail("View Recent timesheet button is not clickable")
+
+        try:
+            self.get_Close_Report_Timesheet().click()
+        except TimeoutException:
+            pytest.fail("close report timesheet button is not clickable")
+
+        try:
+            self.get_Apply_Leave_Button().click()
+        except TimeoutException:
+            pytest.fail("Apply leave button is not clickable")
+
+        try:
+            self.get_Back_Apply_Leave_Button().click()
+        except TimeoutException:
+            pytest.fail("Apply leave Back button is not clickable")
+
+        try:
+            self.get_sidebar_menu_back_button().click()
+        except TimeoutException:
+            pytest.fail("sidebar menu back button is not clickable")
+
+        try:
+            self.get_go_to_Dashboard().click()
+        except TimeoutException:
+            pytest.fail("Go to dashbord menu click is not working")
+
+
 

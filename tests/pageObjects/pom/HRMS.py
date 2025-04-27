@@ -46,12 +46,10 @@ class HRMS:
     def get_upcomming_leaves(self):
         return WebDriverWait(self.driver, timeout=10).until(EC.presence_of_element_located(HRMS.Upcomming_Leaves))
 
-
-
     def is_no_records_message_displayed(self):
 
         try:
-            element = self.driver.find_element(self.Upcomming_Leaves)
+            element = self.driver.find_element(self.No_upcoming_leaves)
             return element.is_displayed() and element.text.strip() == "There are no records to display"
         except:
             return False
@@ -220,29 +218,113 @@ class HRMS:
                 )
 
     def get_HRMS(self):
-        self.get_sidebar_menu_HRMS().click()
-        self.get_Leaves().click()
-        self.get_upcomming_leaves().click()
-        self.get_history_leaves().click()
-        print("Data displayed")
-        self.get_Detail_history_Leaves().click()
-        print("Detail displayed")
-        self.get_Back_Button_Detail_History_Leaves().click()
-        self.get_Verify_casual_leaves().click()
-        self.get_Verify_total_leaves().click()
-        print("Leaves value checked")
-        self.get_Apply_leave_button().click()
-        self.get_Leave_type_Dropdown()
+
+        try:
+            self.get_sidebar_menu_HRMS().click()
+        except TimeoutException:
+            pytest.fail("Sidebar menu is not clickable")
+
+        try:
+            self.get_Leaves().click()
+        except TimeoutException:
+            pytest.fail("Leaves menu is not clickable")
+
+        try:
+            self.get_upcomming_leaves()
+        except TimeoutException:
+            pytest.fail("Upcoming leave menu is not clickable")
+
         time.sleep(5)
-        self.get_To_Dropdown(driver=self.driver, user_list=['Manish Patel', 'Tejas Patel'])
+
+        try:
+            self.get_history_leaves().click()
+        except TimeoutException:
+            pytest.fail("History leave tab is not clickable or visible")
+
         time.sleep(5)
-        self.get_start_from_date_field().click()
-        self.get_select_date_picker('2025', '4','10')
-        self.get_end_to_date_field().click()
-        self.get_end_to_date_picker('2025','4','11')
-        self.get_duration_selection().click()
+
+        try:
+            self.get_Detail_history_Leaves().click()
+        except TimeoutException:
+            pytest.fail("Detail page is not loaded")
+
+        time.sleep(5)
+
+        try:
+            self.get_Back_Button_Detail_History_Leaves().click()
+        except TimeoutException:
+            pytest.fail("BAck button fromthe detail history page is not working")
+
+        time.sleep(5)
+
+        try:
+            self.get_Verify_casual_leaves().click()
+        except TimeoutException:
+            pytest.fail("Casual leave is not as per expected")
+
+        try:
+            self.get_Verify_total_leaves().click()
+        except TimeoutException:
+            pytest.fail("Total leave is not as per expected")
+
+        try:
+            self.get_Apply_leave_button().click()
+        except TimeoutException:
+            pytest.fail("Apply leave button is not clickable")
+
+        try:
+            self.get_Leave_type_Dropdown()
+        except TimeoutException:
+            pytest.fail("Leave type dropdown is not opened")
+        time.sleep(5)
+
+        try:
+            self.get_To_Dropdown(driver=self.driver, user_list=['Manish Patel', 'Tejas Patel'])
+        except TimeoutException:
+            pytest.fail("Value is not selected from the dropdown")
+
+        time.sleep(5)
+
+        try:
+            self.get_start_from_date_field().click()
+        except TimeoutException:
+            pytest.fail("Start date field click is not working")
+
+        try:
+            self.get_select_date_picker('2025', '4','10')
+        except TimeoutException:
+            pytest.fail("Sart date value is not selectable")
+        try:
+            self.get_end_to_date_field().click()
+        except TimeoutException:
+            pytest.fail("End date field click is not working")
+
+        try:
+            self.get_end_to_date_picker('2025','4','11')
+        except TimeoutException:
+            pytest.fail("End date Value   is not Selectable")
+
+        try:
+            self.get_duration_selection().click()
+        except TimeoutException:
+            pytest.fail("Duration selection is not working")
+
         keyboard.write("First Half")
         keyboard.press("enter")
-        self.get_leave_reason().send_keys("Need to attend Function")
-        self.get_cancel_button().click()
-        self.get_Back_button_leave_list().click()
+
+        try:
+            self.get_leave_reason().send_keys("Need to attend Function")
+        except TimeoutException:
+            pytest.fail("Is not clickable and written in the field")
+
+        try:
+            self.get_cancel_button().click()
+        except TimeoutException:
+            pytest.fail("cancel button Is not clickable")
+
+        try:
+            self.get_Back_button_leave_list().click()
+        except TimeoutException:
+            pytest.fail("Back button from the list page is not working")
+
+

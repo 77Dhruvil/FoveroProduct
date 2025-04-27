@@ -1,6 +1,6 @@
 import allure
 import pytest
-from tests.FoveroLoginTests.test_FoveroLogin import test_FoveroLogin_Positive
+#from tests.FoveroLoginTests.test_FoveroLogin import test_FoveroLogin_Positive
 from tests.pageObjects.pom.dashboard import Dashboard
 
 
@@ -9,8 +9,7 @@ from tests.pageObjects.pom.dashboard import Dashboard
 @pytest.mark.positive
 def test_Fovero_Dashboard(driver):
     try:
-        # Step 1: Login
-        test_FoveroLogin_Positive(driver)
+
 
         # Step 2: Navigate to Dashboard
         dashboard = Dashboard(driver)
