@@ -1,3 +1,5 @@
+import pytest
+from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from tests.utils.common_utils import webdriver_wait
 
@@ -27,9 +29,22 @@ class LoginPage:
         return self.driver.find_element(*LoginPage.Error_message)
 
     def get_Fovero_Login(self, eml , pwd ):
-        self.get_EMail().send_keys(eml)
-        self.get_Password().send_keys(pwd)
-        self.get_Sign_button().click()
+
+        try:
+            self.get_EMail().send_keys(eml)
+        except TimeoutException:
+            pytest.fail("user is not able to enter email in the field ")
+
+        try:
+            self.get_Password().send_keys(pwd)
+        except TimeoutException:
+            pytest.fail("user is not able to enter password in the field ")
+
+        try:
+            self.get_Sign_button().click()
+        except TimeoutException:
+            pytest.fail("user is not able to click on sign in button ")
+
 
     def get_error_message(self):
       return  self.get_error_message().text

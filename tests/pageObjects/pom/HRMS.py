@@ -1,5 +1,6 @@
 import time
 import keyboard
+import pyautogui
 
 import pytest
 import allure
@@ -35,6 +36,11 @@ class HRMS:
     Leave_Reason = (By.ID,"leave_reason")
     Cancel_button = (By.XPATH,'//*[@id="root"]/div[2]/div[3]/div[2]/div[1]/div/div/form/div[6]/div/button[2]')
     Back_button_Leave_List = (By.XPATH,'//*[@id="root"]/div[2]/div[3]/div[1]/div[1]/a')
+    Leave_logs = (By.XPATH,'//*[@id="root"]/div[2]/div[3]/div/div/div/div[1]/div/div[2]/div[2]/a')
+    Back_button_Leave_Logs = (By.XPATH,'//*[@id="root"]/div[2]/div[3]/div[1]/div/div[1]/div/a')
+    Attendance_Productivity_Report_click = (By.XPATH,'//*[@id="root"]/div[2]/div[3]/div/div/div/div[2]/div/div[2]/div[1]/a/button')
+    Productivity_report_Status_dropdown_click = (By.XPATH,'//*[@id="filter"]/div')
+    Productivity_report_Status_dropdown_value = (By.XPATH,'//*[@id="filter"]/div/div[1]/div[2]')
 
 
     def get_sidebar_menu_HRMS(self):
@@ -217,6 +223,29 @@ class HRMS:
                 (EC.presence_of_element_located(HRMS.Back_button_Leave_List))
                 )
 
+    def get_Leave_logs(self):
+        return (WebDriverWait(self.driver, timeout=10).until
+                (EC.presence_of_element_located(HRMS.Leave_logs))
+                )
+
+    def get_Back_button_leave_logs(self):
+        return (WebDriverWait(self.driver, timeout=10).until
+                (EC.presence_of_element_located(HRMS.Back_button_Leave_Logs))
+                )
+
+    def get_attendance_productivity_report(self):
+        return WebDriverWait(self.driver,timeout=10).until(
+            EC.presence_of_element_located(HRMS.Attendance_Productivity_Report_click)
+        )
+
+    def get_productivity_report_statu_dropdown_click(self):
+        return WebDriverWait(self.driver,timeout=10).until(EC.presence_of_element_located(HRMS.Productivity_report_Status_dropdown_click))
+
+    def get_productivity_report_status_dropdown_value(self):
+        return WebDriverWait(self.driver, timeout=10).until(
+            EC.presence_of_element_located(HRMS.Productivity_report_Status_dropdown_value))
+
+
     def get_HRMS(self):
 
         try:
@@ -327,4 +356,36 @@ class HRMS:
         except TimeoutException:
             pytest.fail("Back button from the list page is not working")
 
+        try:
+            self.get_Leave_logs().click()
+        except TimeoutException:
+            pytest.fail("User is not able to click on the leave logs")
+
+
+        pyautogui.scroll(-500)  # Scrolls down
+
+        try:
+           self.get_Back_button_leave_logs().click()
+        except TimeoutException:
+            pytest.fail("User is not able to click the leave logs back button")
+
+        try:
+            self.get_attendance_productivity_report().click()
+        except TimeoutException:
+            pytest.fail("User is not able to click on the productivity report")
+        time.sleep(3)
+
+        try:
+            self.get_productivity_report_statu_dropdown_click().click()
+        except TimeoutException:
+            pytest.fail("User is not able to click on the dropdown")
+
+        time.sleep(3)
+
+        try:
+            self.get_productivity_report_status_dropdown_value().click()
+        except TimeoutException:
+            pytest.fail("User is not able to click on the dropdown")
+
+        time.sleep(3)
 
