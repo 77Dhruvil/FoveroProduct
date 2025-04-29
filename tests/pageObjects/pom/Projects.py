@@ -82,7 +82,7 @@ class Projects:
         wait = WebDriverWait(self.driver, 10)
 
         # 1. Click on the Status field to open the Status dropdown
-        status_drp_field = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="status"]/div[1]')))
+        status_drp_field = wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="status"]/div[1]/div[1]/div[2]')))
         status_drp_field.click()
 
     def get_filter_search_button(self):
