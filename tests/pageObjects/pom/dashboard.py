@@ -2,7 +2,7 @@ import time
 from lib2to3.pgen2 import driver
 import pyautogui
 import pytest
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, NoSuchElementException
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -180,60 +180,60 @@ class Dashboard:
 
         try:
             self.get_user_weekly_recorded_hrs_viewall().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("View all button is not clickable")
 
         try:
             self.get_punch_in_out_back_button().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Back button is not clickable")
 
 
         try:
             self.get_sidebar_menu_back_button().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("sidebar Back button is not clickable")
 
         pyautogui.scroll(-500)  # Scrolls down
 
         try:
             self.get_Recent_Timesheet().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Recent timesheet button is not clickable")
 
         try:
             self.get_close_Recent_Timesheet().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("close recent timesheet button is not clickable")
 
         try:
             self.get_View_Recent_Timesheet().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("View Recent timesheet button is not clickable")
 
         try:
             self.get_Close_Report_Timesheet().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("close report timesheet button is not clickable")
 
         try:
             self.get_Apply_Leave_Button().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Apply leave button is not clickable")
 
         try:
             self.get_Back_Apply_Leave_Button().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Apply leave Back button is not clickable")
 
         try:
             self.get_sidebar_menu_back_button().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("sidebar menu back button is not clickable")
 
         try:
             self.get_go_to_Dashboard().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Go to dashbord menu click is not working")
 
 

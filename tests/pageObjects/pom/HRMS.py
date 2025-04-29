@@ -4,7 +4,7 @@ import pyautogui
 
 import pytest
 import allure
-from selenium.common import StaleElementReferenceException, TimeoutException
+from selenium.common import StaleElementReferenceException, TimeoutException, NoSuchElementException
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -250,92 +250,92 @@ class HRMS:
 
         try:
             self.get_sidebar_menu_HRMS().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Sidebar menu is not clickable")
 
         try:
             self.get_Leaves().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Leaves menu is not clickable")
 
         try:
             self.get_upcomming_leaves()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Upcoming leave menu is not clickable")
 
         time.sleep(5)
 
         try:
             self.get_history_leaves().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("History leave tab is not clickable or visible")
 
         time.sleep(5)
 
         try:
             self.get_Detail_history_Leaves().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Detail page is not loaded")
 
         time.sleep(5)
 
         try:
             self.get_Back_Button_Detail_History_Leaves().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("BAck button fromthe detail history page is not working")
 
         time.sleep(5)
 
         try:
             self.get_Verify_casual_leaves().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Casual leave is not as per expected")
 
         try:
             self.get_Verify_total_leaves().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Total leave is not as per expected")
 
         try:
             self.get_Apply_leave_button().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Apply leave button is not clickable")
 
         try:
             self.get_Leave_type_Dropdown()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Leave type dropdown is not opened")
         time.sleep(5)
 
         try:
             self.get_To_Dropdown(driver=self.driver, user_list=['Manish Patel', 'Tejas Patel'])
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Value is not selected from the dropdown")
 
         time.sleep(5)
 
         try:
             self.get_start_from_date_field().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Start date field click is not working")
 
         try:
             self.get_select_date_picker('2025', '4','10')
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Sart date value is not selectable")
         try:
             self.get_end_to_date_field().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("End date field click is not working")
 
         try:
             self.get_end_to_date_picker('2025','4','11')
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("End date Value   is not Selectable")
 
         try:
             self.get_duration_selection().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Duration selection is not working")
 
         keyboard.write("First Half")
@@ -343,22 +343,22 @@ class HRMS:
 
         try:
             self.get_leave_reason().send_keys("Need to attend Function")
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Is not clickable and written in the field")
 
         try:
             self.get_cancel_button().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("cancel button Is not clickable")
 
         try:
             self.get_Back_button_leave_list().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("Back button from the list page is not working")
 
         try:
             self.get_Leave_logs().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("User is not able to click on the leave logs")
 
 
@@ -366,25 +366,25 @@ class HRMS:
 
         try:
            self.get_Back_button_leave_logs().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("User is not able to click the leave logs back button")
 
         try:
             self.get_attendance_productivity_report().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("User is not able to click on the productivity report")
         time.sleep(3)
 
         try:
             self.get_productivity_report_statu_dropdown_click().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("User is not able to click on the dropdown")
 
         time.sleep(3)
 
         try:
             self.get_productivity_report_status_dropdown_value().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("User is not able to click on the dropdown")
 
         time.sleep(3)

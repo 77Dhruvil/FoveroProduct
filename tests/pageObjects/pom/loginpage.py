@@ -1,5 +1,5 @@
 import pytest
-from selenium.common import TimeoutException
+from selenium.common import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.by import By
 from tests.utils.common_utils import webdriver_wait
 
@@ -32,17 +32,17 @@ class LoginPage:
 
         try:
             self.get_EMail().send_keys(eml)
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("user is not able to enter email in the field ")
 
         try:
             self.get_Password().send_keys(pwd)
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("user is not able to enter password in the field ")
 
         try:
             self.get_Sign_button().click()
-        except TimeoutException:
+        except (TimeoutException, NoSuchElementException) as e:
             pytest.fail("user is not able to click on sign in button ")
 
 
