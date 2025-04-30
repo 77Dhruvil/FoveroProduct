@@ -18,22 +18,22 @@ from tests.pageObjects.pom.dashboard import Dashboard
 def test_Projects(driver):
     projects = Projects(driver)
     try:
-        projects.get_sidebar_menu_projects().click()
+        projects.Sidebar_menu_project().click()
     except Exception as e:
         pytest.fail(str(e))
 
     try:
-        projects.get_project_name_click().click()
+        projects.project_name_click().click()
     except Exception as e:
         pytest.fail(str(e))
 
     try:
-        projects.get_project_Estimation_tab().click()
+        projects.Project_Esitmation_tab().click()
     except Exception as e:
         pytest.fail(str(e))
 
     try:
-        projects.get_Estimation_Department_click().click()
+        projects.Estimation_department_click().click()
     except Exception as e:
         pytest.fail(str(e))
 

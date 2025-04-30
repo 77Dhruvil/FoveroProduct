@@ -8,40 +8,61 @@ from tests.pageObjects.pom.dashboard import Dashboard
 @allure.feature("TC#3 - Validate Dashboard Elements")
 @pytest.mark.positive
 def test_Fovero_Dashboard(driver):
+
+    dashboard = Dashboard(driver)
+
     try:
-
-
-        # Step 2: Navigate to Dashboard
-        dashboard = Dashboard(driver)
-        dashboard.get_Fovero_Dashboardd()
-
-        # Step 3: Validate Productive Hours
-        productive_hours = dashboard.get_user_weekly_recorded_hrs_viewall()
-        assert productive_hours is not None, "Productive hours not displayed"
-        print(f"✅ Productive hours: {productive_hours}")
-
-        todays_birthdays = dashboard.check_birthday_section("Today's")
-
-        if any("No Data Found" in text for text in todays_birthdays):
-            print("✅ No one has a birthday today.")
-        else:
-            print("🎉 Today's Birthdays Found:")
-            for bday in todays_birthdays:
-                print(f"  - {bday}")
-
-        print("\n✅ Verifying Upcoming Birthdays:")
-        upcoming_birthdays = dashboard.check_birthday_section("Upcoming")
-
-        if any("No Data Found" in text for text in upcoming_birthdays):
-            print("✅ No upcoming birthdays.")
-        else:
-            print("🎉 Upcoming Birthdays Found:")
-            for bday in upcoming_birthdays:
-                print(f"  - {bday}")
-
-
-
+        dashboard.fovero_dashboardd().click()
     except Exception as e:
-        allure.attach(driver.get_screenshot_as_png(), name="Dashboard_Failure",
-                      attachment_type=allure.attachment_type.PNG)
-        pytest.fail(f"Test failed due to exception: {e}")
+        pytest.fail(str(e))
+
+    try:
+        dashboard.punch_inn_out_back_button().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.sidebar_menu_back_button().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.recent_timesheet().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.close_recent_timesheet().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.view_recent_timesheet().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.close_report_timesheet().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.apply_leave_button().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.apply_leave_back_button().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.sidebarr_menu_back_button().click()
+    except Exception as e:
+        pytest.fail(str(e))
+
+    try:
+        dashboard.go_to_dashboard().click()
+    except Exception as e:
+        pytest.fail(str(e))
+    print("Completed Whole test case")

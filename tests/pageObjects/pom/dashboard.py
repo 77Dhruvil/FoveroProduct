@@ -176,65 +176,97 @@ class Dashboard:
         pass
 
 
-    def get_Fovero_Dashboardd(self):
+    def fovero_dashboardd(self):
 
         try:
-            self.get_user_weekly_recorded_hrs_viewall().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("View all button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.Weekly_recorded_hrs_viewall))
+        except TimeoutException as e:
+            raise Exception("View all button is not clickable") from e
+
+    def punch_inn_out_back_button(self):
 
         try:
-            self.get_punch_in_out_back_button().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("Back button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.punch_in_out_back_button))
+        except TimeoutException as e:
+            raise Exception("Back button is not clickable") from e
 
-
-        try:
-            self.get_sidebar_menu_back_button().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("sidebar Back button is not clickable")
-
-        pyautogui.scroll(-500)  # Scrolls down
+    def sidebar_menu_back_button(self):
 
         try:
-            self.get_Recent_Timesheet().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("Recent timesheet button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.sidebar_menu_dashboard))
+        except TimeoutException as e:
+            raise Exception("sidebar Back button is not clickable") from e
+
+    pyautogui.scroll(-500)  # Scrolls down
+
+    def recent_timesheet(self):
 
         try:
-            self.get_close_Recent_Timesheet().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("close recent timesheet button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.Recent_Timesheet))
+        except TimeoutException as e:
+            raise Exception("Recent timesheet button is not clickable") from e
+
+    def close_recent_timesheet(self):
 
         try:
-            self.get_View_Recent_Timesheet().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("View Recent timesheet button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.Close_Recent_Timesheet))
+        except TimeoutException as e:
+            raise Exception("close recent timesheet button is not clickable") from e
+
+    def view_recent_timesheet(self):
 
         try:
-            self.get_Close_Report_Timesheet().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("close report timesheet button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.view_Recent_Timesheet))
+        except TimeoutException as e:
+            raise Exception("View Recent timesheet button is not clickable") from e
+
+    def close_report_timesheet(self):
 
         try:
-            self.get_Apply_Leave_Button().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("Apply leave button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.Close_Recent_Timesheet))
+        except TimeoutException as e:
+            raise Exception("close report timesheet button is not clickable") from e
+
+    def apply_leave_button(self):
 
         try:
-            self.get_Back_Apply_Leave_Button().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("Apply leave Back button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.Apply_Leave_button))
+        except TimeoutException as e:
+            raise Exception("Apply leave button is not clickable") from e
+
+    def apply_leave_back_button(self):
 
         try:
-            self.get_sidebar_menu_back_button().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("sidebar menu back button is not clickable")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.Back_Apply_Leave_Button))
+        except TimeoutException as e:
+            raise Exception("Apply leave Back button is not clickable") from e
+
+    def sidebarr_menu_back_button(self):
 
         try:
-            self.get_go_to_Dashboard().click()
-        except (TimeoutException, NoSuchElementException) as e:
-            pytest.fail("Go to dashbord menu click is not working")
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.sidebar_menu_dashboard))
+        except TimeoutException as e:
+            raise Exception("sidebar menu back button is not clickable") from e
+
+    def go_to_dashboard(self):
+
+        try:
+            return WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Dashboard.Go_To_Dashboard))
+        except TimeoutException as e:
+            raise Exception("Go to dashbord menu click is not working") from e
+
+
 
 
 
