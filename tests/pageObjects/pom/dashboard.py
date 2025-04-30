@@ -1,4 +1,5 @@
 import time
+import allure
 from lib2to3.pgen2 import driver
 import pyautogui
 import pytest
@@ -175,22 +176,29 @@ class Dashboard:
             print(f"{tab_name} ➤ No birthday data found.")
         pass
 
-
+    @allure.step("Click on 'View All' in Weekly Recorded Hours")
     def fovero_dashboardd(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.Weekly_recorded_hrs_viewall))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="ViewAll_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("View all button is not clickable") from e
 
+    @allure.step("Click on 'Punch in/out Back button")
     def punch_inn_out_back_button(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.punch_in_out_back_button))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="PunchInOut_BackBtn_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("Back button is not clickable") from e
+
+    @allure.step("Click on sidebar menu back button")
 
     def sidebar_menu_back_button(self):
 
@@ -198,72 +206,98 @@ class Dashboard:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.sidebar_menu_dashboard))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="Sidebarmenu_BackBtn_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("sidebar Back button is not clickable") from e
 
     pyautogui.scroll(-500)  # Scrolls down
 
+    @allure.step("Click on Recent timesheet")
     def recent_timesheet(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.Recent_Timesheet))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="Recent_Time_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("Recent timesheet button is not clickable") from e
 
+    @allure.step("Click on close button to  Recent timesheet")
     def close_recent_timesheet(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.Close_Recent_Timesheet))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="Close_button_Recent_timesheet_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("close recent timesheet button is not clickable") from e
 
+    @allure.step("Click on View  Recent timesheet")
     def view_recent_timesheet(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.view_Recent_Timesheet))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="View_timesheet_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("View Recent timesheet button is not clickable") from e
 
+    @allure.step("Close Report timesheet")
     def close_report_timesheet(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.Close_Recent_Timesheet))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="Close_Report_timesheet_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("close report timesheet button is not clickable") from e
 
+    @allure.step("Apply leave button")
     def apply_leave_button(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.Apply_Leave_button))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="Apply_leave_button_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("Apply leave button is not clickable") from e
 
+    @allure.step("Apply leave Back button")
     def apply_leave_back_button(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.Back_Apply_Leave_Button))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="Apply_leave_Back_button_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("Apply leave Back button is not clickable") from e
 
+    @allure.step("Side bar menu dashboard Back button")
     def sidebarr_menu_back_button(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.sidebar_menu_dashboard))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="Sidebar_menu_dashboard_back_button_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("sidebar menu back button is not clickable") from e
 
+    @allure.step("Go to Dashboard ")
     def go_to_dashboard(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
                 EC.presence_of_element_located(Dashboard.Go_To_Dashboard))
         except TimeoutException as e:
+            allure.attach(self.driver.get_screenshot_as_png(), name="Go_To_Dashboard_button_Error",
+                          attachment_type=allure.attachment_type.PNG)
             raise Exception("Go to dashbord menu click is not working") from e
 
 
