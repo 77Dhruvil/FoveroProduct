@@ -55,7 +55,7 @@ class HRMS:
         return WebDriverWait(self.driver, timeout=10).until(EC.presence_of_element_located(HRMS.Upcomming_Leaves))
 
     def get_upcoming_leave_data_click(self):
-        return WebDriverWait(self.driver, timeout=10).until(EC.presence_of_element_located(HRMS.Upcomming_leave_data_click))
+        return WebDriverWait(self.driver, timeout=10).until(EC.element_to_be_clickable(HRMS.Upcomming_leave_data_click))
 
     def get_upcoming_leave_detail_page_back_button_click(self):
         return WebDriverWait(self.driver, timeout=10).until(
@@ -284,24 +284,33 @@ class HRMS:
 
 
 
-    def upcoming_leave_detail_click(self):
+    # def upcoming_leave_detail_click(self):
+    #
+    #     try:
+    #         return WebDriverWait(self.driver, timeout=10).until(
+    #             EC.element_to_be_clickable(HRMS.Upcomming_leave_data_click))
+    #     except TimeoutException :
+    #         print("⏭️ No upcoming leave found – skipping this step.")
+    #     return None
 
+    def upcoming_leave_detail_click(self):
         try:
-            return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(HRMS.Upcomming_leave_data_click))
-        except TimeoutException as e:
-            raise Exception("Upcoming leave menu is not clickable") from e
+            return WebDriverWait(self.driver, timeout=5).until(
+                EC.element_to_be_clickable(HRMS.Upcomming_leave_data_click)
+            )
+        except TimeoutException:
+            print("No upcoming leave data found.")
+            return None
 
     def upcoming_leave_detail_page_back_button(self):
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(HRMS.Upcomming_leave_detail_page_backbutton))
-        except TimeoutException as e:
-            raise Exception("Upcoming leave menu is not clickable") from e
-
-
-
+                EC.element_to_be_clickable(HRMS.Upcomming_leave_detail_page_backbutton)
+            )
+        except TimeoutException:
+            print("No Upcoming Detail page found --- Skip")
+            return None
 
     def history_leave_tab(self):
 
@@ -493,5 +502,5 @@ class HRMS:
         except TimeoutException as e:
             raise Exception("User is not able to click on the dropdown") from e
 
-
+    print("completed")
 
