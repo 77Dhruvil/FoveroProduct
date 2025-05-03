@@ -9,12 +9,19 @@ from selenium.common import StaleElementReferenceException, TimeoutException, No
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.common.exceptions import TimeoutException, ElementClickInterceptedException
+from selenium.common.exceptions import TimeoutException, StaleElementReferenceException
 
 
 class Projects:
 
     def __init__(self, driver):
         self.driver = driver
+
+    def scroll_to_element(self, element):
+        # Scrolls the element into view
+        self.driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", element)
 
     # Page Locators
     Sidebar_Menu_Projects = (By.CSS_SELECTOR,
@@ -23,7 +30,7 @@ class Projects:
     project_name_estimation_tab = (By.ID, "project_details-tab-estimation")
     Estimation_Department_click = (By.XPATH, '//*[@id="cell-1-undefined"]/div')
     View_Estimation_popup_close = (
-    By.CSS_SELECTOR, "body > div.modal.show > div > div > div > div.py-2.modal-header > button")
+        By.CSS_SELECTOR, "body > div.modal.show > div > div > div > div.py-2.modal-header > button")
     Document_tab_click = (By.XPATH, '//*[@id="project_details"]/li[3]')
     Edit_project_Back_button = (By.XPATH, '//*[@id="root"]/div[2]/div[3]/form/div[1]/div[2]')
     Search_bar = (By.ID, "search")
@@ -35,9 +42,9 @@ class Projects:
     Progressbar_click = (By.XPATH, '//*[@id="cell-5-754"]/div/div')
     Progressbar_Detail_page_Date_picker = (By.XPATH, '/html/body/div[2]/div[1]/div/div[2]/div/div')
     Progressbar_Detail_page_Date_picker_start_date = (
-    By.XPATH, '/html/body/div[2]/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div[6]')
+        By.XPATH, '/html/body/div[2]/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[2]/div[1]/div[6]')
     Progressbar_Detail_page_Date_picker_End_date = (
-    By.XPATH, '/html/body/div[2]/div[1]/div/div[2]/div[2]/div[2]/div/div/div[3]/div[2]/div[5]/div[7]')
+        By.XPATH, '/html/body/div[2]/div[1]/div/div[2]/div[2]/div[2]/div/div/div[3]/div[2]/div[5]/div[7]')
     Progressbar_Detail_page_Close_button = (By.XPATH, '/html/body/div[2]/div[1]/button')
 
     def get_sidebar_menu_projects(self):
@@ -176,11 +183,9 @@ class Projects:
         try:
 
             return WebDriverWait(self.driver, timeout=10).until(
-             EC.presence_of_element_located(Projects.Edit_project_Back_button))
+                EC.presence_of_element_located(Projects.Edit_project_Back_button))
         except TimeoutException as e:
             raise Exception("Project Edit button  click is not clickable or not loaded at a time") from e
-
-
 
     time.sleep(2)
 
@@ -188,7 +193,7 @@ class Projects:
         try:
 
             return WebDriverWait(self.driver, timeout=10).until(
-             EC.presence_of_element_located(Projects.Search_bar))
+                EC.presence_of_element_located(Projects.Search_bar))
         except TimeoutException as e:
             raise Exception("Search bar  value is not cleared from the search bar") from e
 
@@ -197,7 +202,7 @@ class Projects:
         try:
 
             return WebDriverWait(self.driver, timeout=10).until(
-             EC.presence_of_element_located(Projects.Filter_Button))
+                EC.presence_of_element_located(Projects.Filter_Button))
         except TimeoutException as e:
             raise Exception("Filter button is not clickable or filter menu is not opened") from e
 
@@ -225,67 +230,202 @@ class Projects:
         except TimeoutException as e:
             raise Exception("Again filter sidebar menu is not opened") from e
 
-
-    time.sleep(5)
+    time.sleep(10)
 
     def Reset_button(self):
-
         try:
-            return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(Projects.Filter_Reset_Button))
+            # Wait until the reset button is visible
+            reset_btn = WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Projects.Filter_Reset_Button)
+            )
+
+            # Wait for the button to be clickable and then click it
+            WebDriverWait(self.driver, timeout=10).until(
+                EC.element_to_be_clickable(Projects.Filter_Reset_Button)
+            )
+
+            reset_btn.click()
+            return None
+
+
+        except StaleElementReferenceException:
+
+            # In case the element became stale, try locating it again
+
+            print("Element became stale, re-locating the element.")
+
+            return self.Reset_button()  # Recursive call to re-locate and click again
+
+
         except TimeoutException as e:
-            raise Exception("Filter reset button is not clickable") from e
 
+            raise Exception("Reset Filter button not found or not clickable within the timeout") from e
 
+        except Exception as e:
 
-    time.sleep(5)
+            raise Exception("An unexpected error occurred while interacting with the Reset Filter button.") from e
+
+    time.sleep(10)
 
     def progress_button_click(self):
-
         try:
-            return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(Projects.Progressbar_click))
+            # Wait for the progress button to be visible
+            progress_btn = WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Projects.Progressbar_click)
+            )
+
+            # Wait for the element to be clickable
+            WebDriverWait(self.driver, timeout=10).until(
+                EC.element_to_be_clickable(Projects.Progressbar_click)
+            )
+
+            progress_btn.click()
+            return None
+
+
+        except StaleElementReferenceException:
+
+            # In case the element became stale, try locating it again
+
+            print("Element became stale, re-locating the element.")
+
+            return self.progress_button_click()  # Recursive call to re-locate and click again
+
+
         except TimeoutException as e:
-            raise Exception("progressbar is not clickable") from e
 
+            raise Exception("Progress button not found or not clickable within the timeout") from e
 
+        except Exception as e:
+
+            raise Exception("An unexpected error occurred while interacting with the Reset Filter button.") from e
 
     time.sleep(5)
 
     def Date_picker(self):
-
         try:
-            return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker))
-        except TimeoutException as e:
-            raise Exception("Date picker is not clickable") from e
+            # Wait for the progress button to be visible
+            progress_btn_date_picker = WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker)
+            )
 
+            # Wait for the element to be clickable
+            WebDriverWait(self.driver, timeout=10).until(
+                EC.element_to_be_clickable(Projects.Progressbar_Detail_page_Date_picker)
+            )
+
+            progress_btn_date_picker.click()
+            return None
+
+
+        except StaleElementReferenceException:
+
+            # In case the element became stale, try locating it again
+
+            print("Element became stale, re-locating the element.")
+
+            return self.Date_picker()  # Recursive call to re-locate and click again
+
+
+        except TimeoutException as e:
+
+            raise Exception("Start date  not found or not clickable within the timeout") from e
+
+        except Exception as e:
+
+            raise Exception("An unexpected error occurred while interacting with the Reset Filter button.") from e
 
     time.sleep(5)
 
     def start_date_picker(self):
 
         try:
-            return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker_start_date))
+            progress_btn_start_date = WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker_start_date)
+            )
+
+            # Wait for the element to be clickable
+            WebDriverWait(self.driver, timeout=10).until(
+                EC.element_to_be_clickable(Projects.Progressbar_Detail_page_Date_picker_start_date)
+            )
+
+            progress_btn_start_date.click()
+            return None
+
+        except StaleElementReferenceException:
+
+            # In case the element became stale, try locating it again
+
+            print("Element became stale, re-locating the element.")
+
+            return self.start_date_picker()  # Recursive call to re-locate and click again
+
         except TimeoutException as e:
-            raise Exception("Start date is not clickable") from e
+
+            raise Exception("Start date  not found or not clickable within the timeout") from e
+
+        except Exception as e:
+
+            raise Exception("An unexpected error occurred while interacting with the Reset Filter button.") from e
+
 
     def end_date_picker(self):
-
         try:
-            return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker_End_date))
+            progress_btn_end_date = WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Projects.Progressbar_Detail_page_Date_picker_End_date)
+            )
+
+        # Wait for the element to be clickable
+            WebDriverWait(self.driver, timeout=10).until(
+                EC.element_to_be_clickable(Projects.Progressbar_Detail_page_Date_picker_End_date)
+            )
+
+            progress_btn_end_date.click()
+            return None
+
+        except StaleElementReferenceException:
+
+# In case the element became stale, try locating it again
+
+                print("Element became stale, re-locating the element.")
+
+                return self.end_date_picker()  # Recursive call to re-locate and click again
+
         except TimeoutException as e:
-            raise Exception("End date is not clickable") from e
+
+                raise Exception("End date  not found or not clickable within the timeout") from e
+
+        except Exception as e:
+
+                raise Exception("An unexpected error occurred while interacting with the Reset Filter button.") from e
 
 
     def Progressbar_Detail_close(self):
-
         try:
-            return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(Projects.Progressbar_Detail_page_Close_button))
+            progress_dtl_close = WebDriverWait(self.driver, timeout=10).until(
+                EC.presence_of_element_located(Projects.Progressbar_Detail_page_Close_button)
+            )
+
+        # Wait for the element to be clickable
+            WebDriverWait(self.driver, timeout=10).until(
+                EC.element_to_be_clickable(Projects.Progressbar_Detail_page_Close_button)
+            )
+
+            progress_dtl_close.click()
+            return None
+
+        except StaleElementReferenceException:
+
+        # In case the element became stale, try locating it again
+
+            print("Element became stale, re-locating the element.")
+
+            return self.end_date_picker()  # Recursive call to re-locate and click again
+
         except TimeoutException as e:
-            raise Exception("Progressbar Detial page is not closed") from e
 
+            raise Exception("Progressbar detail page not clickable within the timeout") from e
 
+        except Exception as e:
+
+            raise Exception("An unexpected error occurred while interacting with the Reset Filter button.") from e

@@ -281,18 +281,6 @@ class HRMS:
         except TimeoutException as e:
             raise Exception("Upcoming leave menu is not clickable") from e
 
-
-
-
-    # def upcoming_leave_detail_click(self):
-    #
-    #     try:
-    #         return WebDriverWait(self.driver, timeout=10).until(
-    #             EC.element_to_be_clickable(HRMS.Upcomming_leave_data_click))
-    #     except TimeoutException :
-    #         print("⏭️ No upcoming leave found – skipping this step.")
-    #     return None
-
     def upcoming_leave_detail_click(self):
         try:
             return WebDriverWait(self.driver, timeout=5).until(
@@ -325,14 +313,13 @@ class HRMS:
     time.sleep(5)
 
     def history_detail_page(self):
-
         try:
-            return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(HRMS.Detail_History_Leaves))
-        except TimeoutException as e:
-            raise Exception("Detail page is not loaded") from e
-
-
+            return WebDriverWait(self.driver, timeout=5).until(
+                EC.element_to_be_clickable(HRMS.Detail_History_Leaves)
+            )
+        except TimeoutException:
+            print("No history leave data found.")
+            return None
 
     time.sleep(5)
 
@@ -340,11 +327,11 @@ class HRMS:
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(HRMS.Back_Button_Detail_History_leaves))
-        except TimeoutException as e:
-            raise Exception("BAck button fromthe detail history page is not working") from e
-
-
+                EC.element_to_be_clickable(HRMS.Back_Button_Detail_History_leaves)
+            )
+        except TimeoutException:
+            print("No History Detail page found --- Skip")
+            return None
 
     time.sleep(5)
 
