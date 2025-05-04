@@ -234,6 +234,7 @@ class Dashboard:
                           attachment_type=allure.attachment_type.PNG)
             raise Exception("close recent timesheet button is not clickable") from e
 
+    pyautogui.scroll(-500)
     @allure.step("Click on View  Recent timesheet")
     def view_recent_timesheet(self):
 
@@ -250,12 +251,13 @@ class Dashboard:
 
         try:
             return WebDriverWait(self.driver, timeout=10).until(
-                EC.presence_of_element_located(Dashboard.Close_Recent_Timesheet))
+                EC.presence_of_element_located(Dashboard.close_Report_Timesheet))
         except TimeoutException as e:
             allure.attach(self.driver.get_screenshot_as_png(), name="Close_Report_timesheet_Error",
                           attachment_type=allure.attachment_type.PNG)
             raise Exception("close report timesheet button is not clickable") from e
 
+    pyautogui.scroll(-500)
     @allure.step("Apply leave button")
     def apply_leave_button(self):
 
